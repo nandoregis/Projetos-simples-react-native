@@ -20,6 +20,7 @@ const corPadrao = 'white';
 
 const urlToMyGithub = 'https://github.com/nandoregis?tab=repositories';
 
+
 const App = () => {
 
   const enviarParaGithub = async ()=> {
@@ -29,6 +30,47 @@ const App = () => {
         console.log('link aprovado');
         await Linking.openURL(urlToMyGithub);
       }
+  }
+
+  function Boll({ch}) {
+    let ver = true;
+
+
+    if(ch == 8 || ch == 9 || ch == 10 || ch == 11) {
+      ver = false;
+    }else if(ch == 15 || ch == 18 || ch == 23 || ch == 24) {
+      ver = false;
+    }else if( ch == 45 || ch == 44 || ch == 43 || ch == 46) {
+      ver = false;
+    }else if (ch == 65 || ch == 66 || ch == 71 || ch == 74) {
+      ver = false;
+    }else if(ch == 79 || ch == 80) {
+      ver = false;
+    }
+  
+    return(
+      <View>
+          {
+            ver ?
+            
+              <Text style={[style.boll, style.bollColor]}/>
+            :
+              <Text style={[style.boll, style.bollColor2]}/>
+          }
+      </View>
+    );
+  }
+  
+  function Loop() {
+    
+    let arr = [];
+    for(let i = 0; i < 91; i++) {
+        arr.push(
+          <Boll key={i} ch={i}/>
+        )
+    }
+
+    return arr;
   }
  
   return (
@@ -45,6 +87,10 @@ const App = () => {
         >Luís Fernando R S</Text>
         <Text accessibilityLabel='Nickname nandoregis'  style={style.textNickName}>nandoregis</Text>
         <Text accessibilityLabel='Descrição de nandoregis'  style={[style.colorDefault, style.textDescription]}>Desenvolvedor Front-end - Iniciante</Text>
+        
+        <View style={style.bollView}>
+            <Loop></Loop>
+        </View>
 
         <Pressable onPress={enviarParaGithub}>
             <View style={style.button}>
@@ -98,5 +144,24 @@ const style = StyleSheet.create({
   textButton: {
       color: '#f9f9f9',
       fontSize: 17,
+  },
+  bollView: {
+    marginVertical: 15,
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    maxHeight: 150,
+  },
+  boll: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginHorizontal: 1,
+  },
+  bollColor: {
+    backgroundColor: 'green',
+  },
+  bollColor2: {
+    backgroundColor: 'red',
   }
+
 });
